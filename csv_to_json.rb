@@ -1,6 +1,7 @@
 require 'thor'
 require 'json'
 require 'csv'
+require 'colorize'
 
 class CsvToJsonCLI < Thor
   desc "convert FILE JSON_TEMPLATE", "Convert a CSV file to JSON using a template"
@@ -11,18 +12,18 @@ class CsvToJsonCLI < Thor
 
   def convert(file=nil)
     unless File.exist?(file)
-      puts "Error: File #{file} does not exist."
+      puts "Error: File #{file} does not exist.".red
       return
     end
 
     unless file.end_with?('.csv') || file.end_with?('.txt')
-      puts "Error: File #{file} should have a '.csv' or '.txt' extension"
+      puts "Error: File #{file} should have a '.csv' or '.txt' extension".red
       return
     end
     
     csv_content = File.read(file, :encoding => 'utf-8')
     unless csv_content.valid_encoding?
-      puts "Error: File #{file} is not UTF-8 encoded."
+      puts "Error: File #{file} is not UTF-8 encoded.".red
       return
     end
 
@@ -45,8 +46,6 @@ class CsvToJsonCLI < Thor
         row.each_with_index do |(header, value), index|
           placeholder = "<col#{index + 1}>"
           # Add quotes only if the value is not a number
-          puts('value:')
-          puts(value)
           
           replacement = value.to_s.match?(/\A[-+]?\d*\.?\d+\Z/) ? value : "\"#{value}\""
           json_row.gsub!(placeholder, replacement)
@@ -57,8 +56,8 @@ class CsvToJsonCLI < Thor
           key = row[key_column] || row[headers[key_column]] # Use column index or header name
           json_data[key] = row_json
         rescue JSON::ParserError => e
-          puts "Error: Invalid JSON template for row #{row.inspect}"
-          puts "Details: #{e.message}"
+          puts "Error: Invalid JSON template for row #{row.inspect}".red
+          puts "Details: #{e.message}".yellow
           return
         end
       end
@@ -70,7 +69,7 @@ class CsvToJsonCLI < Thor
     end
   
     File.write(output_file, JSON.pretty_generate(json_data))
-    puts "JSON output has been written to #{output_file}"
+    puts "JSON output has been written to #{output_file}".green
   end
   
   
