@@ -157,8 +157,8 @@ If you want to modify or extend the functionality:
    ruby csv_to_json.rb convert test.csv --key-column=1
    ```
 
----
 </details>
+---
 ## component_duplicate.rb
 
 <details>
@@ -309,8 +309,8 @@ ruby component_duplicate.rb duplicate 3 --input=template.jsx --replacement=User 
    Error: Input file <file_path> does not exist.
    ```
 
----
 </details>
+---
 ## Contributing
 
 Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
