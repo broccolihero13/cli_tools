@@ -1,6 +1,6 @@
 # CLI Tools
 
-A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to help with common tasks. This repository includes tools like `csv_to_json.rb` for converting CSV files to JSON format.
+A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to help with common tasks.
 
 ## Prerequisites
 
@@ -25,6 +25,7 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 ---
 
 ## csv_to_json.rb
+<details>
 
 ### Overview
 
@@ -157,9 +158,10 @@ If you want to modify or extend the functionality:
    ```
 
 ---
-
+</details>
 ## component_duplicate.rb
 
+<details>
 ### Overview
 
 The `component_duplicate.rb` tool duplicates JSX templates a specified number of times, with optional placeholder replacements. It supports multi-line JSX templates provided directly or through a file.
@@ -307,9 +309,8 @@ ruby component_duplicate.rb duplicate 3 --input=template.jsx --replacement=User 
    Error: Input file <file_path> does not exist.
    ```
 
-
 ---
-
+</details>
 ## Contributing
 
 Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
