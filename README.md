@@ -225,6 +225,24 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
   ruby component_duplicate.rb duplicate 3 --input=template.jsx --replacement=User
   ```
 
+  ### Terminal Alias (Optional)
+
+  For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
+
+  ```sh
+  alias duplicator="ruby ~/<full>/<path>/<to>/cli_tools/component_duplicate.rb duplicate"
+  ```
+
+  Reload your shell configuration:
+  ```sh
+  source ~/.bashrc # or ~/.zshrc
+  ```
+
+  Now, you can run the tool using the alias:
+  ```sh
+  duplicator 4 --input="<abc><placeholder></abc>"
+  ```
+
 </details>
 
 ---
