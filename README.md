@@ -11,7 +11,7 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
 ---
 
-## Installation
+## Installation/quick start
 
 1. Clone the repository:
    ```sh
@@ -24,6 +24,15 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
    bundle install
    ```
 
+3. Add aliases to .zshrc (optional):
+  ```sh
+  zsh add_aliases.sh
+  ```
+
+4. Add aliases to .bashrc (optional):
+  ```sh
+  bash add_aliases.sh
+  ```
 ---
 
 ## Tools
