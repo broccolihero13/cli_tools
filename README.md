@@ -247,6 +247,70 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
 ---
 
+<details>
+  <summary>Details for file_search.rb</summary>
+
+  ### Overview
+
+  The `file_search.rb` tool recursively searches a folder for a substring. It supports an output file, extension specification, and exclusions
+
+  ### Usage
+
+  #### 1. Recursive Search
+  Searches for a substring within a specified folder pattern
+
+  ```sh
+  ruby file_search.rb search '<folder_pattern>' '<substring>'
+  ```
+
+  ### Options:
+  - **Ignore Case:** - ignores case-sensitivity
+  - **Extensions:** `.js,.txt` - will only search through files with the extensions specified (separated by commas)
+  - **Exclude:** `metadata.js,v-1` - will skip folders and files matching the patterns (separated by commas)
+
+  #### 2. Specify Output File
+  Specify a custom output file name.
+
+  ```sh
+  ruby file_search.rb search '<folder_pattern>' '<substring>' --output="results.txt"
+  ```
+
+  #### 3. Search specific file extensions
+  Add the extensions flag to have the search only look in specific file types
+
+  ```sh
+  ruby file_search.rb search 'W*' "UUID" --extensions=".js,.jsx"
+  ```
+
+  #### 4. Exclude certain file and folder patterns
+  Add the exclude flag to have the search ignore files and folder patterns
+
+  ```sh
+  ruby file_search.rb search 'W*' "UUID" --extensions=".js,.jsx"  --exclude="v-1,metadata.js"
+  ```
+
+  ### Terminal Alias (Optional)
+
+  For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
+
+  ```sh
+  alias fileSearch="ruby ~/<full>/<path>/<to>/cli_tools/file_search.rb search\"
+  ```
+
+  Reload your shell configuration:
+  ```sh
+  source ~/.bashrc # or ~/.zshrc
+  ```
+
+  Now, you can run the tool using the alias:
+  ```sh
+   fileSearch '*' "<substring>"
+  ```
+
+</details>
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
