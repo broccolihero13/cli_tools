@@ -256,6 +256,8 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
 ---
 
+###file_search.rb
+
 <details>
   <summary>Details for file_search.rb</summary>
 
