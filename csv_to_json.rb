@@ -4,13 +4,40 @@ require 'csv'
 require 'colorize'
 
 class CsvToJsonCLI < Thor
+  def self.exit_on_failure?
+    true
+  end
+
+  def help(*args)
+    puts <<~HELP
+      CSV-to-JSON Help:
+      ---------------------------------
+      convert FILE JSON_TEMPLATE 
+          Convert a CSV file to JSON using a template.
+      
+    HELP
+
+    puts "Example: ruby csv_to_json.rb convert sample.csv --key-column=1 --customize-json='{\"name\": \"<col1>\", \"age\": \"<col2>\"}' ".light_blue
+    puts "Output: Converts the CSV file 'sample.csv' to JSON using the first column as the key and the first and second columns as 'name' and 'age' fields, respectively.".green
+
+    puts "
+    -------------------------------------------------
+    "
+    super
+  end
+
   desc "convert FILE JSON_TEMPLATE", "Convert a CSV file to JSON using a template"
   method_option :has_headers, type: :boolean, default: true, desc: "Indicates if the CSV file has headers"
-  method_option :key_column, type: :numeric, required: true, desc: "The column number to use as the key"
+  method_option :key_column, type: :numeric, desc: "The column number to use as the key"
   method_option :customize_json, type: :string, default: '', desc: "Enable custom JSON structure"
   method_option :output, type: :string, default: nil, desc: "Enable custom JSON structure"
 
   def convert(file=nil)
+    if ARGV.include?('-h') || ARGV.include?('--help')
+      invoke :help, ['convert']
+      return
+    end
+
     unless File.exist?(file)
       puts "Error: File #{file} does not exist.".red
       return
@@ -27,7 +54,7 @@ class CsvToJsonCLI < Thor
       return
     end
 
-    key_column = options[:key_column] - 1
+    key_column = options[:key_column] ? options[:key_column] - 1 : 0
     customize_json = options[:customize_json]
     has_headers = options[:has_headers]
     default_output = File.basename(file, File.extname(file)) + ".json"

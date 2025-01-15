@@ -2,13 +2,40 @@ require 'thor'
 require 'colorize'
 
 class FileSearchCLI < Thor
+  def self.exit_on_failure?
+    true
+  end
+
+  def help(*args)
+    puts <<~HELP
+      Search Help:
+      ---------------------------------
+      search DIRECTORY_PATTERN SUBSTRING
+          Recursively search for a SUBSTRING in files matching DIRECTORY_PATTERN.
+      
+    HELP
+
+    puts "Example: ruby file_search.rb search 'W*' \"UUID\" --extensions=\".js,.jsx\"  --exclude=\"v-1,metadata.js\" ".light_blue
+    puts "Output: Searches for \"UUID\" in files with .js or .jsx extension under directories starting with 'W' and excluding files/directories with 'v-1' or 'metadata.js' in their name.\"".green
+
+    puts "
+    -------------------------------------------------
+    "
+    super
+  end
+
   desc "search DIRECTORY_PATTERN SUBSTRING", "Recursively search for a SUBSTRING in files under directories matching DIRECTORY_PATTERN"
   method_option :output, type: :string, desc: "File to save the search results"
   method_option :ignore_case, type: :boolean, default: false, desc: "Ignore case during search"
   method_option :extensions, type: :string, desc: "Comma-separated list of file extensions to include (e.g., .rb,.txt)"
   method_option :exclude, type: :string, desc: "Comma-separated list of file or directory names to exclude"
 
-  def search(directory_pattern, substring)
+  def search(directory_pattern, substring = nil)
+    if ARGV.include?('-h') || ARGV.include?('--help')
+      invoke :help, ['search']
+      return
+    end
+
     directories = Dir.glob(directory_pattern)
     if directories.empty?
       puts "Error: No directories match the pattern '#{directory_pattern}'.".red

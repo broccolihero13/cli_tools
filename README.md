@@ -79,6 +79,16 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
   - **Template:** `{"name": "<col1>", "age": "<col2>"}`
   - **Output:** `sample.json` (default) or specified with `--output`.
 
+  #### 4. Getting Help
+  You can get help with the convert tool by using the following commands
+  ```sh 
+   ruby csv_to_json.rb convert -h
+  ```
+  or (if you're using the Terminal Alias)
+  ```sh
+  csvToJson -h
+  ```
+
   ### Terminal Alias (Optional)
 
   For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
@@ -234,6 +244,16 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
   ruby component_duplicate.rb duplicate 3 --input=template.jsx --replacement=User
   ```
 
+  #### 4. Getting Help
+  You can get help with the duplicate tool by using the following commands
+  ```sh 
+   ruby component_duplicate.rb duplicate -h
+  ```
+  or (if you're using the Terminal Alias)
+  ```sh
+  duplicator -h
+  ```
+
   ### Terminal Alias (Optional)
 
   For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
@@ -298,6 +318,16 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
   ```sh
   ruby file_search.rb search 'W*' "UUID" --extensions=".js,.jsx"  --exclude="v-1,metadata.js"
+  ```
+
+  #### 5. Getting Help
+  You can get help with the search tool by using the following commands
+  ```sh 
+   ruby file_search.rb search -h
+  ```
+  or (if you're using the Terminal Alias)
+  ```sh
+  fileSearch -h
   ```
 
   ### Terminal Alias (Optional)
