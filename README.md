@@ -351,6 +351,142 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 </details>
 
 ---
+### api_looper.rb
+
+<details>
+  <summary>Details for api_looper.rb</summary>
+
+  ### Overview
+
+  The `api_looper.rb` tool converts loops through a CSV file and make API calls for each row, it then creates an output file that includes the results of the API calls.
+
+  ### Usage
+
+  #### 1. CSV Format
+  The CSV requires a 'method' and 'endpoint' column and an optional (as needed) 'payload' column
+
+  ```csv
+  method,endpoint,payload
+    PUT,https://demo1.api.droplet.io/v1/accounts/attributes,"{""accountId"":""GDBAlm"",""attributes"":{""state"":""active"",""region"":""CA"",""country"":""USA"",""fullName"":""Professor Plum"",""jobTitle"":""Professor"",""lastName"":""Plum"",""locality"":""Beverly Hills"",""username"":""professorplum"",""createdAt"":"""",""firstName"":""Professor"",""updatedAt"":"""",""externalId"":""45678"",""postalCode"":""90210"",""rawAddress"":"""",""divisionName"":"""",""employeeType"":""Suspect"",""managerEmail"":"""",""primaryEmail"":""plum@notanemailaddress.com"",""streetAddress"":""123 Street"",""costCenterName"":"""",""departmentName"":""Clue"",""secondaryEmail"":""proplum@notarealemail.com"",""customAttribute1"":""Purple"",""customAttribute2"":""Rope"",""customAttribute3"":""Hall"",""customAttribute4"":"""",""customAttribute5"":"""",""customAttribute6"":"""",""customAttribute7"":"""",""customAttribute8"":"""",""customAttribute9"":"""",""employmentStartDate"":""""}}"
+  ```
+
+  #### 2. Loop through CSV
+  `loop` will go through the specified CSV file
+
+  ```sh
+  ruby api_looper.rb loop sample.csv
+  ```
+
+  - **Input:** `sample.csv`
+
+  #### 3. Specify Output File and token
+  Specify a custom output file name and token (the tool will prompt you if you don't include a token but it can be left blank)
+
+  ```sh
+  ruby api_looper.rb loop sample.csv thisOutputFile.csv --access_token 'abcdefghijklmnopqrstuv'
+  ```
+
+  - **Input:** `sample.csv`
+  - **Output:** `thisOutputFile.csv`
+  - **Token:** `abcdefghijklmnopqrstuv`
+
+  #### 4. Getting Help
+  You can get help with the loop tool by using the following commands
+  ```sh 
+   ruby api_looper.rb loop -h
+  ```
+  or (if you're using the Terminal Alias)
+  ```sh
+  apiLooper -h
+  ```
+
+  ### Terminal Alias (Optional)
+
+  For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
+
+  ```sh
+  alias apiLooper="ruby ~/<full>/<path>/<to>/cli_tools/api_looper.rb loop"
+  ```
+
+  Reload your shell configuration:
+  ```sh
+  source ~/.bashrc # or ~/.zshrc
+  ```
+
+  Now, you can run the tool using the alias:
+  ```sh
+  csvToJson sample.csv --key-column=1
+  ```
+
+  ### Examples
+
+  #### Input CSV (`sample.csv`)
+  ```csv
+  name,age
+  Alice,25
+  Bob,30
+  ```
+
+  #### Example 1: Standard Conversion
+  ```sh
+  ruby csv_to_json.rb convert sample.csv --key-column=1
+  ```
+
+  **Output (`sample.json`):**
+  ```json
+  {
+    "Alice": {
+      "name": "Alice",
+      "age": "25"
+    },
+    "Bob": {
+      "name": "Bob",
+      "age": "30"
+    }
+  }
+  ```
+
+  #### Example 2: Custom JSON Structure
+  ```sh
+  ruby csv_to_json.rb convert sample.csv --key-column=1 --customize-json='{"name": "<col1>", "age": "<col2>"}'
+  ```
+
+  **Output (`sample.json`):**
+  ```json
+  {
+    "Alice": {
+      "name": "Alice",
+      "age": 25
+    },
+    "Bob": {
+      "name": "Bob",
+      "age": 30
+    }
+  }
+  ```
+
+  #### Example 3: Specify Output File
+  ```sh
+  ruby csv_to_json.rb convert sample.csv --key-column=1 --output=custom_output.json
+  ```
+
+  **Output (`custom_output.json`):**
+  ```json
+  {
+    "Alice": {
+      "name": "Alice",
+      "age": "25"
+    },
+    "Bob": {
+      "name": "Bob",
+      "age": "30"
+    }
+  }
+  ```
+
+</details>
+
+---
 
 ## Contributing
 

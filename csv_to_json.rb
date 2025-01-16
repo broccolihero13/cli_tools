@@ -28,8 +28,8 @@ class CsvToJsonCLI < Thor
 
   desc "convert FILE JSON_TEMPLATE", "Convert a CSV file to JSON using a template"
   method_option :has_headers, type: :boolean, default: true, desc: "Indicates if the CSV file has headers"
-  method_option :key_column, type: :numeric, desc: "The column number to use as the key"
-  method_option :customize_json, type: :string, default: '', desc: "Enable custom JSON structure"
+  method_option :key_column, aliases: '-k' ,type: :numeric, desc: "The column number to use as the key"
+  method_option :customize_json, aliases: '-j', type: :string, default: '', desc: "Enable custom JSON structure"
   method_option :output, type: :string, default: nil, desc: "Enable custom JSON structure"
 
   def convert(file=nil)
