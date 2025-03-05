@@ -1,0 +1,3 @@
+method,endpoint,timestamp,status,response_body
+PUT,https://demo1.api.droplet.io/v1/accounts/attributes,2025-01-18 00:27:24 UTC,200,"{""success"":true,""requestId"":""Qz7VLR3zPDskm7B""}"
+PUT,https://demo1.api.droplet.io/v1/accounts/attributes,2025-01-18 00:27:24 UTC,200,"{""success"":true,""requestId"":""qmkM12jlGnTER6""}"

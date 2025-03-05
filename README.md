@@ -488,6 +488,150 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
 ---
 
+### common_ids.rb
+
+<details>
+  <summary>Details for common_ids.rb</summary>
+
+  ### Overview
+
+  The `common_ids.rb` tool compares two files and returns IDs that can be found in BOTH files (ability to exclude items that start with a specific substring).
+
+  ### Usage
+
+  #### 1. File Format
+  The files must contain a substring of `id="` and its corresponding closing quote `"`
+
+  Example of two JSX files:
+  
+  File 1:
+  ```jsx
+  <Form color="#000000">
+    <Section id="section1" display="false">
+      <Computed
+        id="siteDetails"
+        label="SITE DETAILS"
+        columns={3}
+        formula="site ? locations[site] : false"
+      />
+      <Computed
+        id="siteFullName"
+        label="Site Full Name"
+        columns={3}
+        formula="siteDetails ? siteDetails.siteFullName : ''"
+      />
+      <Tile
+        id="tile1"
+        label="Site Full Name"
+        columns={3}
+      />
+      <Computed
+        id="secretaryAssigned"
+        label="ROUTING:Secretary"
+        columns={3}
+        display="false"
+        formula="siteDetails && siteDetails.routeSecretaryAsstEmail ? { name: siteDetails.routeSecretaryAsstName , email: siteDetails.routeSecretaryAsstEmail } : false"
+      />
+      <Computed
+        id="principalAssigned"
+        label="ROUTING:Principal"
+        columns={3}
+        display="false"
+        formula="siteDetails && siteDetails.routePrincipalDirectorEmail ? { name: siteDetails.routePrincipalDirectorName , email: siteDetails.routePrincipalDirectorEmail } : false"
+      />
+    </Section>
+  </Form>
+  ```
+
+  File 2:
+  ```jsx
+  <Form color="#000000">
+    <Section id="section1" display="false">
+      <Computed
+        id="siteDetails"
+        label="SITE DETAILS"
+        columns={3}
+        formula="site ? locations[site] : false"
+      />
+      <Computed
+        id="notmatched"
+        label="Site Full Name"
+        columns={3}
+        formula="siteDetails ? siteDetails.siteFullName : ''"
+      />
+      <Tile
+        id="tile1"
+        label="Site Full Name"
+        columns={3}
+      />
+      <Computed
+        id="secretaryAssigned"
+        label="ROUTING:Secretary"
+        columns={3}
+        display="false"
+        formula="siteDetails && siteDetails.routeSecretaryAsstEmail ? { name: siteDetails.routeSecretaryAsstName , email: siteDetails.routeSecretaryAsstEmail } : false"
+      />
+      <Computed
+        id="principalAssigned"
+        label="ROUTING:Principal"
+        columns={3}
+        display="false"
+        formula="siteDetails && siteDetails.routePrincipalDirectorEmail ? { name: siteDetails.routePrincipalDirectorName , email: siteDetails.routePrincipalDirectorEmail } : false"
+      />
+    </Section>
+  </Form>
+  ```
+
+
+  #### 2. Find Common IDs
+  `common_ids` finds common IDs between the two files
+
+  ```sh
+  ruby common_ids.rb common_ids sample.csv
+  ```
+
+  - **Input:** `sample1.jsx sample2.jsx`
+
+  #### 3. Exclusions
+  Specify IDs that you'd like to ignore
+
+  ```sh
+  ruby common_ids.rb common_ids sample1.jsx sample2.jsx --exclude tile section text line spacer rejected
+  ```
+
+  #### 4. Getting Help
+  You can get help with the loop tool by using the following commands
+  ```sh 
+   ruby common_ids.rb common_ids -h
+  ```
+  or (if you're using the Terminal Alias)
+  ```sh
+  commonIds -h
+  ```
+
+  ### Terminal Alias (Optional)
+
+  For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
+
+  ```sh
+  alias common_ids="ruby ~/<full>/<path>/<to>/cli_tools/common_ids.rb common_ids"
+  ```
+
+  Reload your shell configuration:
+  ```sh
+  source ~/.bashrc # or ~/.zshrc
+  ```
+
+  Now, you can run the tool using the alias:
+  ```sh
+  commonIds file1 file2 --exclude tile
+  ```
+
+
+</details>
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
