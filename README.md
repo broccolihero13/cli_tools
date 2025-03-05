@@ -415,7 +415,7 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
   Now, you can run the tool using the alias:
   ```sh
-  csvToJson sample.csv --key-column=1
+  apiLooper sample.csv --access_token 'abcdefghijklmnopqrstuv'
   ```
 
   ### Examples
