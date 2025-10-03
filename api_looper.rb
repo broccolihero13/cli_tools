@@ -3,12 +3,9 @@ require 'csv'
 require 'json'
 require 'thor'
 require 'colorize'
+require_relative "base_cli"
 
-class ApiCaller < Thor
-  def self.exit_on_failure?
-    true
-  end
-
+class ApiCaller < BaseCLI
   def help(*args)
     puts <<~HELP
       API Call Looper Help:
@@ -31,10 +28,7 @@ class ApiCaller < Thor
   method_option :access_token, aliases: '-t', type: :string, desc: "Access token for API calls (optional)"
 
   def loop(input_file, output_file="output.csv")
-    if ARGV.include?('-h') || ARGV.include?('--help')
-      invoke :help, ['loop']
-      return
-    end
+    check_help_for("loop")
     token = options[:access_token] || ask("Enter access token (leave blank if none):")
 
     results = []

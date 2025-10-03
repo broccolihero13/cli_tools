@@ -1,11 +1,8 @@
 require 'thor'
 require 'colorize'
+require_relative "base_cli"
 
-class ComponentDuplicateCLI < Thor
-  def self.exit_on_failure?
-    true
-  end
-
+class ComponentDuplicateCLI < BaseCLI
   def help(*args)
     puts <<~HELP
       CSV-to-JSON Help:
@@ -31,11 +28,7 @@ class ComponentDuplicateCLI < Thor
   method_option :input, type: :string, desc: "Input string or file path containing the JSX template"
 
   def duplicate(iterations = 2)
-    if ARGV.include?('-h') || ARGV.include?('--help')
-      invoke :help, ['duplicate']
-      return
-    end
-
+    check_help_for("duplicate")
     iterations = iterations.to_i
     replacement = options[:replacement]
 

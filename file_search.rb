@@ -1,11 +1,8 @@
 require 'thor'
 require 'colorize'
+require_relative "base_cli"
 
-class FileSearchCLI < Thor
-  def self.exit_on_failure?
-    true
-  end
-
+class FileSearchCLI < BaseCLI
   def help(*args)
     puts <<~HELP
       Search Help:
@@ -31,10 +28,7 @@ class FileSearchCLI < Thor
   method_option :exclude, type: :string, desc: "Comma-separated list of file or directory names to exclude"
 
   def search(directory_pattern, substring = nil)
-    if ARGV.include?('-h') || ARGV.include?('--help')
-      invoke :help, ['search']
-      return
-    end
+    check_help_for("search")
 
     directories = Dir.glob(directory_pattern)
     if directories.empty?

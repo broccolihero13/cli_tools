@@ -1,10 +1,8 @@
 require 'thor'
+require 'colorize'
+require_relative "base_cli"
 
-class JSXParser < Thor
-  def self.exit_on_failure?
-    true
-  end
-
+class JSXParser < BaseCLI
   def help(*args)
     puts <<~HELP
       Common IDs Help:
@@ -25,9 +23,21 @@ class JSXParser < Thor
 
   desc "common_ids FILE1 FILE2", "Finds common ID props in two JSX files"
   option :exclude, type: :array, default: [], desc: "List of substrings to exclude IDs that start with them"
-
+  option :help, type: :boolean, aliases: "-h", desc: "Show help for this command"
   
-  def common_ids(file1, file2)
+  def common_ids(file1=nil, file2=nil)
+    check_help_for("common_ids")
+
+    if file1.nil? || file2.nil?
+      puts "Error: Please provide two file names.".red
+      return
+    end
+
+    if !File.exist?(file1) || !File.exist?(file2)
+      puts "Error: One or both files do not exist.".red
+      return
+    end
+
     ids1 = extract_ids(file1, options[:exclude])
     ids2 = extract_ids(file2, options[:exclude])
 
@@ -49,7 +59,6 @@ class JSXParser < Thor
   def extract_ids(file, exclude_patterns)
     ids = []
     File.foreach(file) do |line|
-      # Regex to match id="value" or id='value'
       extracted_ids = line.scan(/id=["']([^"']+)["']/).flatten
       filtered_ids = extracted_ids.reject do |id|
         exclude_patterns.any? { |pattern| id.start_with?(pattern) }

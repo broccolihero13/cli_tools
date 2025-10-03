@@ -2,12 +2,9 @@ require 'thor'
 require 'json'
 require 'csv'
 require 'colorize'
+require_relative "base_cli"
 
-class CsvToJsonCLI < Thor
-  def self.exit_on_failure?
-    true
-  end
-
+class CsvToJsonCLI < BaseCLI
   def help(*args)
     puts <<~HELP
       CSV-to-JSON Help:
@@ -33,11 +30,7 @@ class CsvToJsonCLI < Thor
   method_option :output, type: :string, default: nil, desc: "Enable custom JSON structure"
 
   def convert(file=nil)
-    if ARGV.include?('-h') || ARGV.include?('--help')
-      invoke :help, ['convert']
-      return
-    end
-
+    check_help_for("convert")
     unless File.exist?(file)
       puts "Error: File #{file} does not exist.".red
       return
