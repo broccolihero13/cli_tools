@@ -91,6 +91,9 @@ class ApiCaller < BaseCLI
 
     response = nil
     begin
+      # NOTE:
+      # This CLI tool runs locally and only calls user-specified endpoints.
+      # SSRF is not a concern because there is no untrusted remote input.
       case method.downcase
       when 'get'
         response = HTTParty.get(endpoint, options)

@@ -1,14 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    bigdecimal (3.2.2)
+    bigdecimal (3.3.1)
     colorize (1.1.0)
     csv (3.3.5)
-    httparty (0.23.1)
+    httparty (0.23.2)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    json (2.13.0)
+    json (2.18.0)
     mini_mime (1.1.5)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
