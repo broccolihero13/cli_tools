@@ -350,6 +350,54 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
 </details>
 
+### json_diff.rb
+
+<details>
+  <summary>Details for json_diff.rb</summary>
+
+  ### Overview
+
+  The `json_diff.rb` tool compares two JSON files and displays the differences in a human-readable format. It can compare entire JSON structures or focus on a specific key using the `--comparable` flag.
+
+  ### Usage
+
+  #### 1. Basic Comparison
+  Compare the entirety of two JSON files. It will output added, removed, or changed keys/values.
+
+  ```sh
+  ruby json_diff.rb diff file1.json file2.json
+
+2. Specific Key Comparison
+
+If you want to only diff a specific field between the two files, you can use the -c or --comparable flag.
+
+ruby json_diff.rb diff file1.json file2.json -c myKey
+
+If the value of myKey is a string with line breaks in both files, the tool will output a line-by-line breakdown of additions, removals, and changes.
+3. Getting Help
+
+You can get help with the diff tool by using the following commands
+
+ ruby json_diff.rb diff -h
+
+or (if you're using the Terminal Alias)
+
+jsonDiff -h
+
+Terminal Alias (Optional)
+
+For convenience, add an alias to your shell configuration file (e.g., .bashrc, .zshrc):
+
+alias jsonDiff="ruby ~/<full>/<path>/<to>/cli_tools/json_diff.rb diff"
+
+Reload your shell configuration:
+
+source ~/.bashrc # or ~/.zshrc
+
+Now, you can run the tool using the alias:
+
+jsonDiff file1.json file2.json -c myKey
+
 ---
 ### api_looper.rb
 
