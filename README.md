@@ -335,7 +335,7 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
   For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
 
   ```sh
-  alias fileSearch="ruby ~/<full>/<path>/<to>/cli_tools/file_search.rb search\"
+  alias fileSearch="ruby ~/<full>/<path>/<to>/cli_tools/file_search.rb search"
   ```
 
   Reload your shell configuration:
@@ -349,6 +349,8 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
   ```
 
 </details>
+
+---
 
 ### json_diff.rb
 
@@ -366,37 +368,60 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
   ```sh
   ruby json_diff.rb diff file1.json file2.json
+  ```
 
-2. Specific Key Comparison
+  #### 2. Specific Key Comparison
+  If you want to only diff a specific field between the two files, you can use the `-c` or `--comparable` flag.
 
-If you want to only diff a specific field between the two files, you can use the -c or --comparable flag.
+  ```sh
+  ruby json_diff.rb diff file1.json file2.json -c myKey
+  ```
 
-ruby json_diff.rb diff file1.json file2.json -c myKey
+  If the value of `myKey` is a string with line breaks in both files (like a JSX or template block), the tool will output a line-by-line breakdown of additions, removals, and changes.
 
-If the value of myKey is a string with line breaks in both files, the tool will output a line-by-line breakdown of additions, removals, and changes.
-3. Getting Help
+  #### 3. Handling Large Diff Output
+  By default, if the diff output is too large, the tool automatically saves the output to a text file rather than flooding the console. When saving to a file, all ANSI terminal color escape codes are automatically stripped so that the file is saved as clean, human-readable plain text.
 
-You can get help with the diff tool by using the following commands
+  You can customize this behavior using the following options:
 
- ruby json_diff.rb diff -h
+  - `--threshold`, `-t`: The maximum number of lines to print in the console before saving to a file instead (default: `50`).
+  - `--char-limit`, `-l`: The maximum number of characters to print in the console before saving to a file instead (default: `2000`).
+  - `--output`, `-o`: The output file name/path to save the diff to (default: `diff_output.txt` in the current working directory).
 
-or (if you're using the Terminal Alias)
+  ```sh
+  ruby json_diff.rb diff file1.json file2.json -t 100 -l 5000 -o custom_diff.txt
+  ```
 
-jsonDiff -h
+  #### 4. Getting Help
+  You can get help with the diff tool by using the following commands:
 
-Terminal Alias (Optional)
+  ```sh
+  ruby json_diff.rb diff -h
+  ```
+  or (if you're using the Terminal Alias)
+  ```sh
+  jsonDiff -h
+  ```
 
-For convenience, add an alias to your shell configuration file (e.g., .bashrc, .zshrc):
+  ### Terminal Alias (Optional)
 
-alias jsonDiff="ruby ~/<full>/<path>/<to>/cli_tools/json_diff.rb diff"
+  For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
 
-Reload your shell configuration:
+  ```sh
+  alias jsonDiff="ruby ~/<full>/<path>/<to>/cli_tools/json_diff.rb diff"
+  ```
 
-source ~/.bashrc # or ~/.zshrc
+  Reload your shell configuration:
+  ```sh
+  source ~/.bashrc # or ~/.zshrc
+  ```
 
-Now, you can run the tool using the alias:
+  Now, you can run the tool using the alias:
+  ```sh
+  jsonDiff file1.json file2.json -c myKey
+  ```
 
-jsonDiff file1.json file2.json -c myKey
+</details>
 
 ---
 ### api_looper.rb
@@ -470,66 +495,21 @@ jsonDiff file1.json file2.json -c myKey
 
   #### Input CSV (`sample.csv`)
   ```csv
-  name,age
-  Alice,25
-  Bob,30
+  method,endpoint,payload
+  GET,https://api.example.com/v1/status,
+  POST,https://api.example.com/v1/users,"{""name"":""Alice""}"
   ```
 
-  #### Example 1: Standard Conversion
+  #### Example 1: Loop and Output to Custom File
   ```sh
-  ruby csv_to_json.rb convert sample.csv --key-column=1
+  ruby api_looper.rb loop sample.csv output_results.csv --access_token 'my-access-token'
   ```
 
-  **Output (`sample.json`):**
-  ```json
-  {
-    "Alice": {
-      "name": "Alice",
-      "age": "25"
-    },
-    "Bob": {
-      "name": "Bob",
-      "age": "30"
-    }
-  }
-  ```
-
-  #### Example 2: Custom JSON Structure
-  ```sh
-  ruby csv_to_json.rb convert sample.csv --key-column=1 --customize-json='{"name": "<col1>", "age": "<col2>"}'
-  ```
-
-  **Output (`sample.json`):**
-  ```json
-  {
-    "Alice": {
-      "name": "Alice",
-      "age": 25
-    },
-    "Bob": {
-      "name": "Bob",
-      "age": 30
-    }
-  }
-  ```
-
-  #### Example 3: Specify Output File
-  ```sh
-  ruby csv_to_json.rb convert sample.csv --key-column=1 --output=custom_output.json
-  ```
-
-  **Output (`custom_output.json`):**
-  ```json
-  {
-    "Alice": {
-      "name": "Alice",
-      "age": "25"
-    },
-    "Bob": {
-      "name": "Bob",
-      "age": "30"
-    }
-  }
+  **Output CSV (`output_results.csv`):**
+  ```csv
+  method,endpoint,timestamp,status,response_body
+  GET,https://api.example.com/v1/status,2026-05-31T15:00:00Z,200,"{""status"":""OK""}"
+  POST,https://api.example.com/v1/users,2026-05-31T15:00:01Z,201,"{""id"":123,""name"":""Alice""}"
   ```
 
 </details>
@@ -635,7 +615,7 @@ jsonDiff file1.json file2.json -c myKey
   `common_ids` finds common IDs between the two files
 
   ```sh
-  ruby common_ids.rb common_ids sample.csv
+  ruby common_ids.rb common_ids sample1.jsx sample2.jsx
   ```
 
   - **Input:** `sample1.jsx sample2.jsx`
@@ -662,7 +642,7 @@ jsonDiff file1.json file2.json -c myKey
   For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
 
   ```sh
-  alias common_ids="ruby ~/<full>/<path>/<to>/cli_tools/common_ids.rb common_ids"
+  alias commonIds="ruby ~/<full>/<path>/<to>/cli_tools/common_ids.rb common_ids"
   ```
 
   Reload your shell configuration:
