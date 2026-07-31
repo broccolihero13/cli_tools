@@ -3,13 +3,13 @@ GEM
   specs:
     bigdecimal (4.1.2)
     colorize (1.1.0)
-    csv (3.3.5)
+    csv (3.3.6)
     diff-lcs (2.0.0)
     httparty (0.24.2)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    json (2.19.9)
+    json (2.21.2)
     mini_mime (1.1.5)
     multi_xml (0.9.1)
       bigdecimal (>= 3.1, < 5)
@@ -17,6 +17,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  arm64-darwin-25
   x86_64-linux
 
 DEPENDENCIES
@@ -27,5 +28,8 @@ DEPENDENCIES
   json
   thor
 
+RUBY VERSION
+   ruby 3.4.2p28
+
 BUNDLED WITH
-   2.6.9
+   2.6.2
