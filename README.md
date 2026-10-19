@@ -725,6 +725,71 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
 </details>
 
+### video_to_gif.rb
+
+<details>
+  <summary>Details for video_to_gif.rb</summary>
+
+  ### Overview
+
+  The `video_to_gif.rb` tool converts standard video files (such as `.mp4`, `.mov`, `.avi`, `.webm`) into an animated GIF using `ffmpeg`. It will interactively prompt you for conversion options like framerate, width, start time, and duration.
+
+  ### Usage
+
+  #### 1. Basic Conversion
+  Start the conversion process for a video file. It will prompt you for configuration values, all of which have reasonable defaults.
+
+  ```sh
+  ruby video_to_gif.rb convert input.mp4
+  ```
+
+  - **Input:** `input.mp4`
+  - **Output:** `input.gif` (default) or whatever you specify during the prompts.
+
+  #### 2. Specify Output File Early
+  You can specify the output file directly via flags to skip that specific prompt.
+
+  ```sh
+  ruby video_to_gif.rb convert input.mov -o output.gif
+  ```
+
+  #### 3. Getting Help
+  You can get help with the convert tool by using the following commands:
+  ```sh
+   ruby video_to_gif.rb convert -h
+  ```
+  or (if you're using the Terminal Alias)
+  ```sh
+  videoToGif -h
+  ```
+
+  ### Dependencies
+  This tool relies on `ffmpeg` to process the videos. You must install `ffmpeg` before using this tool:
+  - **macOS:** `brew install ffmpeg`
+  - **Ubuntu/Debian:** `sudo apt-get install ffmpeg`
+
+  ### Terminal Alias (Optional)
+
+  For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
+
+  ```sh
+  alias videoToGif="ruby ~/<full>/<path>/<to>/cli_tools/video_to_gif.rb convert"
+  ```
+
+  Reload your shell configuration:
+  ```sh
+  source ~/.bashrc # or ~/.zshrc
+  ```
+
+  Now, you can run the tool using the alias:
+  ```sh
+  videoToGif input.mp4
+  ```
+
+</details>
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
