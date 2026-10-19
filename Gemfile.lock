@@ -26,6 +26,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  arm64-darwin-24
   arm64-darwin-25
   x86_64-linux
 
@@ -37,6 +38,9 @@ DEPENDENCIES
   json
   rubyXL (~> 3.4)
   thor
+
+RUBY VERSION
+  ruby 3.4.5
 
 BUNDLED WITH
   4.0.7
