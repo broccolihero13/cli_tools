@@ -1,0 +1,5 @@
+Diff Action,Name,email,amount
+CHANGED (FROM),John Doe,john@doe.com,"$1,234.12"
+CHANGED (TO),Jake Doe,john@doe.com,"$1,234.12"
+CHANGED (FROM),Jane Doe,jane@doe.com,"1,111.11"
+CHANGED (TO),Jane Doe,jane@doe.com,"1,123.33"
