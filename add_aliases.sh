@@ -10,6 +10,7 @@ FILE_SEARCH_ALIAS="alias fileSearch=\"ruby $TOOLS_DIR/file_search.rb search\""
 API_LOOPER="alias apiLooper=\"ruby $TOOLS_DIR/api_looper.rb loop\""
 COMMON_IDS="alias commonIds=\"ruby $TOOLS_DIR/common_ids.rb common_ids\""
 JSON_DIFF="alias jsonDiff=\"ruby $TOOLS_DIR/json_diff.rb diff\""
+CSV_XLSX_DIFF="alias csvXlsxDiff=\"ruby $TOOLS_DIR/csv_xlsx_diff.rb diff\""
 
 # Detect which shell configuration file to use
 if [ -n "$ZSH_VERSION" ]; then
@@ -40,6 +41,7 @@ echo "$FILE_SEARCH_ALIAS" >> "$RC_FILE"
 echo "$API_LOOPER" >> "$RC_FILE"
 echo "$COMMON_IDS" >> "$RC_FILE"
 echo "$JSON_DIFF" >> "$RC_FILE"
+echo "$CSV_XLSX_DIFF" >> "$RC_FILE"
 
 echo "Aliases added to '$RC_FILE':"
 echo "  - $DUPLICATOR_ALIAS"
@@ -48,8 +50,9 @@ echo "  - $FILE_SEARCH_ALIAS"
 echo "  - $API_LOOPER"
 echo "  - $COMMON_IDS"
 echo "  - $JSON_DIFF"
+echo "  - $CSV_XLSX_DIFF"
 
 # Reload the shell configuration file
 source "$RC_FILE"
 
-echo "The aliases are now available. You can use 'duplicator', 'csvToJson', 'fileSearch', 'apiLooper', 'commonIds', and 'jsonDiff' commands."
+echo "The aliases are now available. You can use 'duplicator', 'csvToJson', 'fileSearch', 'apiLooper', 'commonIds', 'jsonDiff', and 'csvXlsxDiff' commands."
