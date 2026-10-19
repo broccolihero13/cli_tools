@@ -660,6 +660,71 @@ A collection of Ruby CLI tools using [Thor](https://github.com/rails/thor) to he
 
 ---
 
+
+---
+### csv_xlsx_diff.rb
+
+<details>
+  <summary>Details for csv_xlsx_diff.rb</summary>
+
+  ### Overview
+
+  The `csv_xlsx_diff.rb` tool compares two CSV or XLSX files and displays the differences. It also allows you to sort by multiple columns prior to diffing and export the output as a CSV or XLSX file.
+
+  ### Usage
+
+  #### 1. Basic Comparison
+  Compare two files and output the result to the console in a human-readable format.
+
+  ```sh
+  ruby csv_xlsx_diff.rb diff file1.csv file2.csv
+  ```
+
+  #### 2. Sorting
+  Sort by one or more columns before comparing the files using the `-s` or `--sort-by` flag.
+
+  ```sh
+  ruby csv_xlsx_diff.rb diff file1.csv file2.csv -s 'First Name' 'Last Name'
+  ```
+
+  #### 3. Output Type
+  Choose the output type using the `-o` or `--output-type` flag. By default, it outputs to the console (`none`), but it can also be exported as a `csv` or `xlsx`. You can specify the output file name with `--output-file`.
+
+  ```sh
+  ruby csv_xlsx_diff.rb diff file1.xlsx file2.xlsx -o xlsx --output-file differences.xlsx
+  ```
+
+  #### 4. Getting Help
+  You can get help with the diff tool by using the following commands:
+
+  ```sh
+  ruby csv_xlsx_diff.rb diff -h
+  ```
+  or (if you're using the Terminal Alias)
+  ```sh
+  csvXlsxDiff -h
+  ```
+
+  ### Terminal Alias (Optional)
+
+  For convenience, add an alias to your shell configuration file (e.g., `.bashrc`, `.zshrc`):
+
+  ```sh
+  alias csvXlsxDiff="ruby ~/<full>/<path>/<to>/cli_tools/csv_xlsx_diff.rb diff"
+  ```
+
+  Reload your shell configuration:
+  ```sh
+  source ~/.bashrc # or ~/.zshrc
+  ```
+
+  Now, you can run the tool using the alias:
+  ```sh
+  csvXlsxDiff file1.csv file2.csv -o csv
+  ```
+
+</details>
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
