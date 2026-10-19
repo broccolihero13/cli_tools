@@ -194,7 +194,7 @@ class CsvXlsxDiffCLI < BaseCLI
     worksheet = workbook[0]
 
     all_headers = (headers1 + headers2).uniq
-    xlsx_headers = ["Diff Action"] + all_headers
+    xlsx_headers = ["Row (F1 / F2)", "Status"] + all_headers
 
     xlsx_headers.each_with_index do |header, index|
       worksheet.add_cell(0, index, header)
@@ -204,19 +204,46 @@ class CsvXlsxDiffCLI < BaseCLI
     diffs.each do |change|
       case change.action
       when '+'
-        worksheet.add_cell(row_index, 0, "ADDED")
-        all_headers.each_with_index { |h, i| worksheet.add_cell(row_index, i + 1, change.new_element[h]) }
+        worksheet.add_cell(row_index, 0, "- / #{change.new_position + 2}")
+        worksheet.add_cell(row_index, 1, "~ ADDED")
+        all_headers.each_with_index { |h, i| worksheet.add_cell(row_index, i + 2, change.new_element[h]) }
         row_index += 1
       when '-'
-        worksheet.add_cell(row_index, 0, "REMOVED")
-        all_headers.each_with_index { |h, i| worksheet.add_cell(row_index, i + 1, change.old_element[h]) }
+        worksheet.add_cell(row_index, 0, "#{change.old_position + 2} / -")
+        worksheet.add_cell(row_index, 1, "~ REMOVED")
+        all_headers.each_with_index { |h, i| worksheet.add_cell(row_index, i + 2, change.old_element[h]) }
         row_index += 1
       when '!'
-        worksheet.add_cell(row_index, 0, "CHANGED (FROM)")
-        all_headers.each_with_index { |h, i| worksheet.add_cell(row_index, i + 1, change.old_element[h]) }
-        row_index += 1
-        worksheet.add_cell(row_index, 0, "CHANGED (TO)")
-        all_headers.each_with_index { |h, i| worksheet.add_cell(row_index, i + 1, change.new_element[h]) }
+        worksheet.add_cell(row_index, 0, "#{change.old_position + 2} / #{change.new_position + 2}")
+        worksheet.add_cell(row_index, 1, "~ MODIFIED")
+
+        all_headers.each_with_index do |h, i|
+          old_val = change.old_element[h]
+          new_val = change.new_element[h]
+
+          if old_val != new_val
+            rich_text = RubyXL::RichText.new
+
+            r1 = RubyXL::RichTextRun.new(t: RubyXL::Text.new(value: old_val.to_s + ' '))
+            r1.r_pr = RubyXL::RunProperties.new
+            r1.r_pr.color = RubyXL::Color.new(rgb: 'FFFF0000') # red
+            r1.r_pr.strike = RubyXL::BooleanValue.new(val: true) # strikethrough!
+
+            r2 = RubyXL::RichTextRun.new(t: RubyXL::Text.new(value: '→ '))
+
+            r3 = RubyXL::RichTextRun.new(t: RubyXL::Text.new(value: new_val.to_s))
+            r3.r_pr = RubyXL::RunProperties.new
+            r3.r_pr.color = RubyXL::Color.new(rgb: 'FF00B050') # green
+
+            rich_text.r = [r1, r2, r3]
+
+            cell = worksheet.add_cell(row_index, i + 2, '')
+            cell.is = rich_text
+            cell.datatype = RubyXL::DataType::INLINE_STRING
+          else
+            worksheet.add_cell(row_index, i + 2, old_val)
+          end
+        end
         row_index += 1
       end
     end
