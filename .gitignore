@@ -59,3 +59,4 @@ build-iPhoneSimulator/
 *.json
 .DS_Store
 apiCSVTest.csv
+*.mov
