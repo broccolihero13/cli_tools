@@ -61,6 +61,8 @@ class VideoToGifCLI < BaseCLI
 
     duration = ask("Enter duration to convert (in seconds) [default: full video]:")
 
+    custom_text = ask("Enter custom text to overlay on the GIF [optional, default: none]:")
+
     default_output = File.basename(file, File.extname(file)) + ".gif"
     output_file = options[:output] || ask("Enter output file name [default: #{default_output}]:")
     output_file = default_output if output_file.strip.empty?
@@ -68,6 +70,14 @@ class VideoToGifCLI < BaseCLI
     # Build the ffmpeg command
     # A standard high-quality gif conversion in ffmpeg often uses a palette for better color
     vf_filters = "fps=#{fps},scale=#{width}:-1:flags=lanczos"
+
+    if !custom_text.strip.empty?
+      # Escape single quotes and colons for ffmpeg drawtext filter
+      escaped_text = custom_text.gsub("'", "\\\\'").gsub(":", "\\:")
+      # Add text overlay centered at the bottom
+      vf_filters += ",drawtext=text='#{escaped_text}':fontcolor=white:fontsize=24:x=(w-text_w)/2:y=h-text_h-10"
+    end
+
     vf_filters += ",split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"
 
     cmd = ["ffmpeg", "-y"]
