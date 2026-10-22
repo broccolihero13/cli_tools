@@ -72,6 +72,13 @@ class VideoToGifCLI < BaseCLI
     vf_filters = "fps=#{fps},scale=#{width}:-1:flags=lanczos"
 
     if !custom_text.strip.empty?
+      # Check if drawtext filter is available
+      unless system("ffmpeg -filters 2>/dev/null | grep -q drawtext")
+        puts "Error: Your ffmpeg installation does not support the 'drawtext' filter.".red
+        puts "Please install a version of ffmpeg compiled with libfreetype (e.g., 'sudo apt-get install libavfilter-extra' on Ubuntu).".yellow
+        return
+      end
+
       # Escape single quotes and colons for ffmpeg drawtext filter
       escaped_text = custom_text.gsub("'", "\\\\'").gsub(":", "\\:")
       # Add text overlay centered at the bottom
