@@ -39,8 +39,9 @@ class VideoToGifCLI < BaseCLI
       return
     end
 
-    # Check if ffmpeg is installed
-    unless system("command -v ffmpeg > /dev/null 2>&1")
+    # Check if ffmpeg is installed (prefer Homebrew's ffmpeg-full if installed)
+    ffmpeg_bin = find_ffmpeg
+    unless ffmpeg_bin
       puts "Error: ffmpeg is not installed or not in your PATH.".red
       puts "Please install ffmpeg to use this tool.".yellow
       return
@@ -61,7 +62,10 @@ class VideoToGifCLI < BaseCLI
 
     duration = ask("Enter duration to convert (in seconds) [default: full video]:")
 
-    custom_text = ask("Enter custom text to overlay on the GIF [optional, default: none]:")
+    custom_text = ""
+    if drawtext_supported?(ffmpeg_bin)
+      custom_text = ask("Enter custom text to overlay on the GIF [optional, default: none]:")
+    end
 
     default_output = File.basename(file, File.extname(file)) + ".gif"
     output_file = options[:output] || ask("Enter output file name [default: #{default_output}]:")
@@ -71,14 +75,7 @@ class VideoToGifCLI < BaseCLI
     # A standard high-quality gif conversion in ffmpeg often uses a palette for better color
     vf_filters = "fps=#{fps},scale=#{width}:-1:flags=lanczos"
 
-    if !custom_text.strip.empty?
-      # Check if drawtext filter is available
-      unless system("ffmpeg -filters 2>/dev/null | grep -q drawtext")
-        puts "Error: Your ffmpeg installation does not support the 'drawtext' filter.".red
-        puts "Please install a version of ffmpeg compiled with libfreetype (e.g., 'sudo apt-get install libavfilter-extra' on Ubuntu).".yellow
-        return
-      end
-
+    unless custom_text.strip.empty?
       # Escape single quotes and colons for ffmpeg drawtext filter
       escaped_text = custom_text.gsub("'", "\\\\'").gsub(":", "\\:")
       # Add text overlay centered at the bottom
@@ -87,7 +84,7 @@ class VideoToGifCLI < BaseCLI
 
     vf_filters += ",split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"
 
-    cmd = ["ffmpeg", "-y"]
+    cmd = [ffmpeg_bin, "-y"]
 
     cmd += ["-ss", start_time] unless start_time == "0"
     cmd += ["-t", duration] unless duration.strip.empty?
@@ -106,6 +103,27 @@ class VideoToGifCLI < BaseCLI
       puts "Error occurred during conversion.".red
       puts stderr_str.yellow
     end
+  end
+
+  private
+
+  def find_ffmpeg
+    candidates = [
+      "/opt/homebrew/opt/ffmpeg-full/bin/ffmpeg",
+      "/usr/local/opt/ffmpeg-full/bin/ffmpeg",
+      "ffmpeg"
+    ]
+    candidates.find do |bin|
+      if bin.start_with?("/")
+        File.executable?(bin)
+      else
+        system("command -v #{bin} > /dev/null 2>&1")
+      end
+    end
+  end
+
+  def drawtext_supported?(ffmpeg_bin)
+    system("#{ffmpeg_bin} -filters 2>/dev/null | grep -q drawtext")
   end
 end
 
