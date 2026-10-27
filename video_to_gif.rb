@@ -77,7 +77,7 @@ class VideoToGifCLI < BaseCLI
 
     unless custom_text.strip.empty?
       # Escape single quotes and colons for ffmpeg drawtext filter
-      escaped_text = custom_text.gsub("'", "\\\\'").gsub(":", "\\:")
+      escaped_text = custom_text.gsub("'") { "'\\\\\\''" }.gsub(":", "\\:")
       # Add text overlay centered at the bottom
       vf_filters += ",drawtext=text='#{escaped_text}':fontcolor=white:fontsize=24:x=(w-text_w)/2:y=h-text_h-10"
     end
